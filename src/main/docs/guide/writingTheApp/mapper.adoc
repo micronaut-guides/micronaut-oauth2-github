@@ -1,0 +1,48 @@
+Here is a high level diagram of how the authorization code grant flow works with an OAuth 2.0 provider such as Github.
+
+image::standard-oauth.svg[]
+
+We need an HTTP Client to retrieve the user info. Create a POJO to represent a Github user:
+
+[source,java]
+.src/main/java/example/micronaut/GithubUser.java
+----
+include::{sourceDir}/src/main/java/example/micronaut/GithubUser.java[]
+----
+
+Then, create a Micronaut Declarative HTTP Client to consume https://developer.github.com/v3/[Github REST API v3]
+
+[source,java]
+.src/main/java/example/micronaut/GithubApiClient.java
+----
+include::{sourceDir}/src/main/java/example/micronaut/GithubApiClient.java[tag=clazz]
+}
+----
+
+<1> Github encourages to explicitly request the version 3 via the Accept header. With `@Header`, you add the `Accept: application/vnd.github.v3+json` HTTP header to every request.
+<2> Add the id `githubv3` to the `@Client` annotation. Later, you will provide url for this client id.
+<3> Define a HTTP GET request to `/user` endpoint.
+<4> You can return reactive types in a Micronaut declarative HTTP client.
+<5> You can specify that a parameter binds to a HTTP Header such as the *Authorization* header.
+
+
+Specify the url for the `githubv3` service.
+
+[source,java]
+.src/main/resources/application.yml
+----
+include::{sourceDir}/src/main/resources/application.yml[tag=micronaut-http-services]
+----
+
+For Github we need to provide a UserDetails Mapper. The easiest way is to create a bean which implements `OauthUserDetailsMapper`.
+
+[source,java]
+.src/main/java/example/micronaut/GithubUserDetailsMapper.java
+----
+include::{sourceDir}/src/main/java/example/micronaut/GithubUserDetailsMapper.java[]
+----
+
+<1> Usa a name qualifier for the bean which matches the name you used in the OAuth 2.0 configuration in `application.yml`
+<2> Consume the `/user` endpoint with the Micronaut HTTP Client.
+<3> Save the original Github access token in a claim. We will use to to contact Github's api later.
+

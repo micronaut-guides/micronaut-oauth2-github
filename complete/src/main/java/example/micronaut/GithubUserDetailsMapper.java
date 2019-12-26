@@ -11,10 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Named("github")
+@Named("github") // <1>
 @Singleton
 public class GithubUserDetailsMapper implements OauthUserDetailsMapper {
 
+    public static final String TOKEN_PREFIX = "token ";
+    public static final String ROLE_GITHUB = "ROLE_GITHUB";
     private final GithubApiClient apiClient;
 
     public GithubUserDetailsMapper(GithubApiClient apiClient) {
@@ -23,12 +25,9 @@ public class GithubUserDetailsMapper implements OauthUserDetailsMapper {
 
     @Override
     public Publisher<UserDetails> createUserDetails(TokenResponse tokenResponse) {
-        return apiClient.getUser("token " + tokenResponse.getAccessToken())
-                .map(user -> {
-                    List<String> roles = Collections.singletonList("ROLE_GITHUB");
-                    Map<String, Object> atttributes = new HashMap<>();
-                    atttributes.put(OauthUserDetailsMapper.ACCESS_TOKEN_KEY, tokenResponse.getAccessToken());
-                    return new UserDetails(user.getLogin(), roles, atttributes);
-                });
+        return apiClient.getUser(TOKEN_PREFIX + tokenResponse.getAccessToken()) // <2>
+                .map(user -> new UserDetails(user.getLogin(),
+                        Collections.singletonList(ROLE_GITHUB),
+                        Collections.singletonMap(OauthUserDetailsMapper.ACCESS_TOKEN_KEY, tokenResponse.getAccessToken()))); // <3>
     }
 }

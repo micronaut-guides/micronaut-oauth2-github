@@ -1,0 +1,18 @@
+gettingStarted: 
+  title: Getting Started
+  requirements: What you will need
+  solution: Solution
+writingTheApp:
+  title: Writing the App
+  views: Views
+  home: Home
+  oauth2: Github OAuth App
+  oauthconfig: OAuth 2.0 Configuration
+  mapper: User Details Mapper
+  github: Retrieve User Github repositories
+runningTheApp:
+  title: Running the Application
+learnmore:
+  title: Learn More
+help:
+  title: Help with Micronaut

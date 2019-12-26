@@ -1,0 +1,8 @@
+To provide authentication, create a https://developer.github.com/apps/about-apps/[Github Oauth App].
+
+
+image::github-1.png[]
+
+image::github-2.png[]
+
+image::github-3.png[]

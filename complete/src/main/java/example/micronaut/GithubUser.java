@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.micronaut.core.annotation.Introspected;
 
 @Introspected
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class GithubUser {
 
     private String login;

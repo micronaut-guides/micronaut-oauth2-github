@@ -5,7 +5,7 @@ import io.micronaut.core.annotation.Introspected;
 @Introspected
 public class GithubRepo {
 
-    String name;
+    private String name;
 
     public GithubRepo() {
 

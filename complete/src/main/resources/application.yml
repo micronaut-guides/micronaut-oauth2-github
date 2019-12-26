@@ -1,29 +1,41 @@
+#tag::oauth2[]
 micronaut:
   security:
-    enabled: true
-    token:
-      jwt:
-        enabled: true
-        cookie:
-          enabled: true
-    endpoints:
-      logout:
-        enabled: true
-        get-allowed: true
+    enabled: true # <1>
     oauth2:
       enabled: true
       clients:
-        github:
-          client-id:  '${OAUTH_CLIENT_ID}'
-          client-secret: '${OAUTH_CLIENT_SECRET}'
-          scopes:
+        github: # <2>
+          client-id:  '${OAUTH_CLIENT_ID}' # <3>
+          client-secret: '${OAUTH_CLIENT_SECRET}' # <4>
+          scopes: # <5>
             - user:email
             - read:user
             - public_repo
           authorization:
-            url: https://github.com/login/oauth/authorize
+            url: 'https://github.com/login/oauth/authorize' # <6>
           token:
-            url: https://github.com/login/oauth/access_token
+            url: 'https://github.com/login/oauth/access_token' # <7>
             auth-method: client-secret-post
+    token:
+      jwt:
+        enabled: true # <8>
+        cookie:
+          enabled: true # <9>
+    endpoints:
+      logout:
+        enabled: true  # <10>
+        get-allowed: true # <11>
+#end::oauth2[]
+---
+micronaut:
   application:
     name: complete
+---
+#tag::micronaut-http-services[]
+micronaut:
+  http:
+    services:
+      githubv3:
+        url: "https://api.github.com"
+#end::micronaut-http-services[]

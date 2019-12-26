@@ -1,0 +1,46 @@
+With the access token, we retrieved during the login we are going to contact the Github API to fetch the user's repositories.
+
+First, create a POJO to represent a Github repository:
+
+[source,java]
+.src/main/java/example/micronaut/GithubRepo.java
+----
+include::{sourceDir}/src/main/java/example/micronaut/GithubRepo.java[]
+----
+
+Add a method to `GithubApiClient`
+
+[source,java]
+----
+....
+public interface GithubApiClient {
+....
+include::{sourceDir}/src/main/java/example/micronaut/GithubApiClient.java[tag=repos]
+}
+----
+
+<1> Specify two query values `sort` and `direction`.
+<2> Annotate `sort` and `direction` as `@Nullable` since they are optional. You can restrict the allowed values with use of constraints.
+
+Create a controller to expose `/repos` endpoint:
+
+[source,java]
+.src/main/java/example/micronaut/ReposController.java
+----
+include::{sourceDir}/src/main/java/example/micronaut/ReposController.java[]
+----
+
+<1> Qualify the `@Controller` annotation with `/repos` to designate the endpoint url.
+<2> We want this endpoint to be only accessible to authenticated users.
+<3> We specify the view name `repos` which is used to render the model.
+<4> Declare a GET endpoint.
+<5> Consume the Github API.
+<6> Use the previously obtained access token to get access against the Github API.
+
+Create a thymeleaf template:
+
+[source,html]
+.src/main/resources/views/repos.html
+----
+include::{sourceDir}/src/main/resources/views/repos.html[]
+----
