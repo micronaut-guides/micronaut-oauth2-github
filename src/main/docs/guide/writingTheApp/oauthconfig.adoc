@@ -1,11 +1,6 @@
 To use OAuth 2.0 integration, add the next dependency:
 
 [source,java]
-.gradle.properties
-----
-include::{sourceDir}/gradle.properties[]
-----
-[source,java]
 .build.gradle
 ----
 dependencies {
@@ -37,15 +32,16 @@ micronaut:
 include::{sourceDir}/src/main/resources/application.yml[tag=oauth2]
 ----
 
-<1> The provider identifier should match the last part of the url you entered as a redirect url `/oauth/callback/github`
-<2> Client Secret. See previous screenshot.
-<3> Client ID. See previous screenshot.
-<4> Specify the scopes you want to request. https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/[Github Scopes] let you sepcify exactly what type of access you need.
-<5> Map manually the Github's https://tools.ietf.org/html/rfc6749#section-3.1[Authorization endpoint].
-<6> Map manually the Github's https://tools.ietf.org/html/rfc6749#section-3.2[Token endpoint].
-<7> Once validated, we are going to save the ID Token in a Cookie. To read in subsequent requests, enable https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#cookieToken[Cookie Token Reader].
-<9> Enable https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#logout[Logout Controller]
-<9> Accept GET request to the `/logout` endpoint.
+<1> Once validated, we are going to save the ID Token in a Cookie. To read in subsequent requests, set `micronaut.security.authentication` to `cookie`.
+<2> You can create a http://docs.micronaut.io/latest/api/io/micronaut/security/token/jwt/signature/secret/SecretSignatureConfiguration.html[SecretSignatureConfiguration] named `generator` via configuration as illustrated above. The `generator` signature is used to sign the issued JWT claims.
+<3> Change this by your own secret and keep it safe (do not store this in your VCS).
+<4> The provider identifier should match the last part of the url you entered as a redirect url `/oauth/callback/github`
+<5> Client Secret. See previous screenshot.
+<6> Client ID. See previous screenshot.
+<7> Specify the scopes you want to request. https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/[Github Scopes] let you sepcify exactly what type of access you need.
+<8> Map manually the Github's https://tools.ietf.org/html/rfc6749#section-3.1[Authorization endpoint].
+<9> Map manually the Github's https://tools.ietf.org/html/rfc6749#section-3.2[Token endpoint].
+<10> Accept GET request to the `/logout` endpoint.
 
 The previous configuration uses several placeholders. You will need to setup `OAUTH_CLIENT_ID`, `OAUTH_CLIENT_SECRET` environment variables.
 

@@ -1,28 +1,30 @@
 #tag::oauth2[]
 micronaut:
   security:
+    authentication: cookie # <1>
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator: # <2>
+              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"' # <3>
     oauth2:
       clients:
-        github: # <1>
-          client-id:  '${OAUTH_CLIENT_ID}' # <2>
-          client-secret: '${OAUTH_CLIENT_SECRET}' # <3>
-          scopes: # <4>
+        github: # <4>
+          client-id:  '${OAUTH_CLIENT_ID}' # <5>
+          client-secret: '${OAUTH_CLIENT_SECRET}' # <6>
+          scopes: # <7>
             - user:email
             - read:user
             - public_repo
           authorization:
-            url: 'https://github.com/login/oauth/authorize' # <5>
+            url: 'https://github.com/login/oauth/authorize' # <8>
           token:
-            url: 'https://github.com/login/oauth/access_token' # <6>
+            url: 'https://github.com/login/oauth/access_token' # <9>
             auth-method: client-secret-post
-    token:
-      jwt:
-        cookie:
-          enabled: true # <7>
     endpoints:
       logout:
-        enabled: true  # <8>
-        get-allowed: true # <9>
+        get-allowed: true # <10>
 #end::oauth2[]
 ---
 micronaut:

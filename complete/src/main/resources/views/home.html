@@ -13,7 +13,7 @@
     <ul>
         <li th:unless="${security}"><a href="/oauth/login/github">Enter</a></li>
         <li th:if="${security}"><a href="/repos">View Repos</a></li>
-        <li th:if="${security}"><a href="/oauth/logout">Logout</a></li>
+        <li th:if="${security}"><a href="/logout">Logout</a></li>
     </ul>
 </nav>
 </body>
