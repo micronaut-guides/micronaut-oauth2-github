@@ -6,10 +6,11 @@ To use OAuth 2.0 integration, add the next dependency:
 dependencies {
   ...
   ..
-include::{sourceDir}/build.gradle[tag=oauth2]
+include::{sourceDir}/build.gradle[tag=security-oauth2]
 }
 ----
 
+Add the following Oauth2 Configuration:
 Add also JWT https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#jwt[Micronaut’s JWT support] dependencies:
 
 [source,java]
@@ -18,13 +19,13 @@ Add also JWT https://micronaut-projects.github.io/micronaut-security/latest/guid
 dependencies {
   ...
   ..
-include::{sourceDir}/build.gradle[tag=jwt]
+include::{sourceDir}/build.gradle[tag=security-jwt]
 }
 ----
 
 
-Add the following Oauth2 Configuration:
 
+Add the following Oauth2 Configuration:
 [source,java]
 .src/main/resources/application.yml
 ----
